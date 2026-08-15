@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Will You Be My Valentine?</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #ff5f7e, #ff9a9e);
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    text-align: center;
+    overflow: hidden;
+    position: relative;
+  }
+  h1 {
+    color: white;
+    font-size: 2rem;
+    margin: 0 0 2rem;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    padding: 0 1rem;
+  }
+  .btn-row {
+    position: relative;
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100px;
+  }
+  button {
+    padding: 14px 32px;
+    font-size: 1.1rem;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: transform 0.15s ease;
+  }
+  #yesBtn {
+    background: white;
+    color: #ff5f7e;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+  }
+  #yesBtn:hover { transform: scale(1.08); }
+  #noBtn {
+    background: #444;
+    color: white;
+    position: absolute;
+  }
+  #result {
+    margin-top: 2rem;
+    font-size: 1.5rem;
+    color: white;
+    display: none;
+  }
+  .emoji { font-size: 3rem; margin-top: 1rem; display: none; }
+  #photo {
+    display: none;
+    max-width: 280px;
+    width: 80%;
+    border-radius: 16px;
+    margin-top: 1.5rem;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.35);
+    border: 4px solid white;
+  }
+  .cute-msg {
+    color: white;
+    font-size: 1.05rem;
+    margin-top: 1rem;
+    max-width: 320px;
+    line-height: 1.5;
+    text-shadow: 0 1px 4px rgba(0,0,0,0.2);
+  }
+</style>
+</head>
+<body>
+
+<h1 id="question">Will you be my Valentine? 💕</h1>
+
+<div class="btn-row">
+  <button id="yesBtn" onclick="sayYes()">Yes 🥰</button>
+  <button id="noBtn">No</button>
+</div>
+
+<div id="result"></div>
+<img id="photo" src="couple.jpg" alt="Us">
+<div class="cute-msg" id="cuteMsg"></div>
+<div class="emoji" id="celebrate">🎉💖🎉</div>
+
+<script>
+  const noBtn = document.getElementById('noBtn');
+  const yesBtn = document.getElementById('yesBtn');
+  const question = document.getElementById('question');
+  const result = document.getElementById('result');
+  const celebrate = document.getElementById('celebrate');
+
+  function moveNoButton() {
+    const margin = 60;
+    const maxX = window.innerWidth - margin * 2;
+    const maxY = window.innerHeight - margin * 2;
+    const newX = Math.random() * maxX;
+    const newY = Math.random() * maxY;
+    noBtn.style.left = newX + 'px';
+    noBtn.style.top = newY + 'px';
+    noBtn.style.position = 'fixed';
+
+    const currentScale = parseFloat(yesBtn.dataset.scale || 1);
+    const newScale = Math.min(currentScale + 0.08, 2.2);
+    yesBtn.dataset.scale = newScale;
+    yesBtn.style.transform = `scale(${newScale})`;
+  }
+
+  noBtn.addEventListener('mouseover', moveNoButton);
+  noBtn.addEventListener('touchstart', function(e) {
+    e.preventDefault();
+    moveNoButton();
+  });
+  noBtn.addEventListener('click', function(e) {
+    e.preventDefault();
+    moveNoButton();
+  });
+
+  function sayYes() {
+    question.style.display = 'none';
+    noBtn.style.display = 'none';
+    yesBtn.style.display = 'none';
+    result.style.display = 'block';
+    result.textContent = "Yeaaa my princess! 👑💘";
+    document.getElementById('photo').style.display = 'block';
+    document.getElementById('cuteMsg').innerHTML =
+      "You're the best part of my every day. Every dumb thing I code, every dumb thing I do, it's always a little better knowing you're mine. Happy Valentine's, my princess. I love you. 💕";
+    celebrate.style.display = 'block';
+  }
+</script>
+
+</body>
+</html>
